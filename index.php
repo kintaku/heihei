@@ -10,17 +10,30 @@
             $("#btn").click(function(){
               console.log("i'm in");
               console.log($("#op option:selected").val());
-              jQuery.ajax({
-                  dataType: "json",
-                  url: "action/atomic.php",
-                  type: "GET",
-                  data: {arg1:$("#arg1").val(),arg2:$("#arg2").val(),op:$("#op option:selected").val()},
-                  success: function(data){
-                    var htmlobj=data.arg1+data.op+data.arg2+"="+data.result;
-                    htmlobj+="<br/>";
-                    $("#history").append(htmlobj);
-                  }
-              });
+              var rNums=/[0-9]{1}/;
+  				    var s1 = document.getElementById("arg1").value;
+				    	var s2 = document.getElementById("arg2").value;
+					    //alert(s1+";"+s2);
+					    if(rNums.test(s1) && rNums.test(s2)){
+						      jQuery.ajax({
+	           			dataType: "json",
+           				url: "action/atomic.php",
+           				type: "GET",
+           				data: {arg1:$("#arg1").val(),arg2:$("#arg2").val(),op:$("#op option:selected").val()},
+           				success: function(data){
+	             			var htmlobj="";
+            				$.each(data,function(key,val){
+	              				htmlobj+=val;
+              					if (key=="arg2") htmlobj+="=";
+            				});
+            				htmlobj+="\n";
+            				$("#result").append(htmlobj);
+           				  }					
+         			    });
+					   } else{
+						      alert("Please input number!");
+				     }
+          
             });
           });
 </script>
@@ -50,7 +63,7 @@
         </h1>
         <h2>
            <p class="p2">History of all Calculations</p>
-           <textarea class="process" id="history" ></textarea>
+           <textarea class="process" id="result" ></textarea>
         </h2>
      </div>
      <div id="footer">

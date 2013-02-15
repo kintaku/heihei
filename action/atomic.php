@@ -16,8 +16,15 @@ switch($op){
     $operator='*';
   break;
   case 3:
-    $result=$arg1/$arg2;
-    $operator='/';
+    if($arg2 ==0){
+  	$result ="Math error";
+		$arg1='';
+		$arg2='';
+		$operator='';
+	  }else{
+        $result=$arg1/$arg2;
+        $operator='/';
+	  }
   break;
 }
 $lista=array("arg1"=>$arg1,"op"=>$operator,"arg2"=>$arg2,"res"=>$result);
